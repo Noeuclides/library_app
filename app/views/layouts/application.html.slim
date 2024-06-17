@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    title
+      | LibraryApp
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+  body
+    / main.container.mx-auto.mt-28.px-5.flex
+    /   = yield
+    .min-h-screen.bg-gray-100.flex.flex-col
+      header.bg-blue-600.text-white
+        .container.mx-auto.py-4
+          .flex.justify-between.items-center
+            h1.text-2xl LibraryApp
+            nav
+              ul.flex.space-x-4
+                li
+                  = link_to 'Home', root_path, class: 'hover:underline'
+                - if user_signed_in?
+                  li
+                    = link_to 'Dashboard', root_path, class: 'hover:underline'
+                  - if current_user.has_role?(:admin)
+                    li
+                      = link_to 'Manage Users', admin_users_path, class: 'hover:underline'
+                  li
+                    = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'hover:underline', data: { turbo_method: "delete" }
+                  li
+                    = current_user.role
+                - else
+                  li
+                    = link_to 'Login', new_user_session_path, class: 'hover:underline'
+                  li
+                    = link_to 'Sign Up', new_user_registration_path, class: 'hover:underline'
+      .container.mx-auto.flex-grow
+        .py-8
+          = yield
+      footer.bg-blue-600.text-white.mt-4
+        .container.mx-auto.py-4
+          p &copy; #{Time.current.year} LibraryApp
