@@ -1,8 +1,10 @@
 class BorrowsController < ApplicationController
   def create
-    @borrows = current_user.borrows.new(borrowing_params)
-    @borrows.borrowed_at = Time.current
-    if @borrows.save
+    @borrow = current_user.borrows.new(borrow_params)
+    authorize! :create, @borrow
+
+    @borrow.borrowed_at = Time.current
+    if @borrow.save
       redirect_to dashboard_member_path, notice: 'Book borrowed successfully.'
     else
       redirect_to dashboard_member_path, alert: 'Book not available for borrow.'
@@ -10,6 +12,8 @@ class BorrowsController < ApplicationController
   end
 
   def return_book
+    authorize! :return, :book
+
     @borrow = Borrow.find(params[:id])
     @borrow.update(returned_at: Time.now, status: :done)
     @borrow.book.update(available_copies: @borrow.book.available_copies + 1)
@@ -18,7 +22,7 @@ class BorrowsController < ApplicationController
 
   private
 
-  def borrowing_params
+  def borrow_params
     params.permit(:book_id)
   end
 end

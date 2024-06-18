@@ -44,7 +44,9 @@ class DashboardsController < ApplicationController
   end
 
   def member_borrows
-    user_borrows = current_user.borrows
+    authorize! :read, :member_dashboard
+
+    user_borrows = current_user.borrows.not_done
     @total_borrows = user_borrows.count
     user_borrows = user_borrows.search(params[:search]) if params[:search].present?
 

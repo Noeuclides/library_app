@@ -1,0 +1,16 @@
+
+The first thing I thought about was the user flow, like a user story. A user goes to the website and has two options: 1. log in if they already have an account or 2. sign up.
+With the sign-up, I had a couple of thoughts. Will the librarian and the member have the same sign-up process?
+I thought this wouldn't be the case, so I considered a third type of user: the admin.
+So, the member will be able to sign up like a normal user, but the librarians will be created by the admin.
+Then I looked at the flow inside the app. Initially, I thought about having two dashboards; it seemed like a naive solution, but I went with it—one for the librarians and admins, and one for the members.
+The admins will have an additional view to create, edit, and delete users.
+Next, I focused on the models I needed and how to manage the admin, librarian, and member roles. I thought about creating a base model, User, and additional models like Admin, Member, and Librarian, but then I considered simplicity and chose to use the Rolify gem to create roles and have only one model, the User.
+For authentication, I was clear on using Devise. For authorization, I thought about Pundit vs. CanCanCan. I checked the pros and cons and was fortunate to have experience with both. However, when I reread the requirements, I found the keyword "Ability," which is the core of CanCanCan, so I chose it.
+Then I started to schematize the models and their relationships. First, the User model was straightforward: configure CanCanCan, Rolify, and Devise.
+For the Book model, I had to consider attributes like title, author, genre, and ISBN. I knew almost nothing about ISBNs, so I checked, and it is a science itself. I found that it is composed of five elements: EAN prefix, registration group, registrant, publication, and check digit.
+So, I decided to create the ISBN from these five elements, which would be registered by the librarian. I thought of creating a Genre model, but it wasn't necessary at this point. Total_copies and available_copies were other considerations. I didn’t know if my Book model was going to have a unique constraint for the ISBN, but then I read that some books could have the same ISBN, so having total_copies as a column worked perfectly fine.
+Available_copies seemed redundant, but then I realized that if I didn't include it, I would have to query the database every time I wanted to know how many available copies of a book there were. Including it as a column only requires updating that field in a callback.
+For the Borrow model, it would have the user ID, book ID, borrowed date, due date, and some status.
+For the dashboard, I initially handled it separately but thought of doing it all at once: total books, total borrowed books, books due today, and a list of members with overdue books. However, I faced some issues with Pagy and thought that if the database is too big, the queries would be slow, so I kept it basic.
+

@@ -28,6 +28,12 @@ class User < ApplicationRecord
   has_many :borrows
   after_create :assign_default_role
 
+  delegate :can?, :cannot?, to: :ability
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
   def assign_default_role
     self.add_role(:member) if self.roles.blank?
   end
