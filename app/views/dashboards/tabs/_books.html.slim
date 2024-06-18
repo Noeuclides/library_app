@@ -1,0 +1,35 @@
+h2.text-2xl.font-bold.mb-2 Total Books
+p.text-lg = @total_books
+
+= link_to 'New Book', new_book_path, class: 'mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700'
+
+h3.text-xl.font-bold.mt-4.mb-2 Book List
+
+- if @books.any?
+  div.overflow-x-auto
+    table.min-w-full.bg-white
+      thead
+        tr
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Title
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Author
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Genre
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 ISBN
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Total Copies
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Actions
+      tbody
+        - @books.each do |book|
+          tr
+            td.py-2.px-4.border-b.text-center = book.title
+            td.py-2.px-4.border-b.text-center = book.author
+            td.py-2.px-4.border-b.text-center = book.genre
+            td.py-2.px-4.border-b.text-center = book.isbn
+            td.py-2.px-4.border-b.text-center = book.total_copies
+            td.py-2.px-4.border-b
+              = link_to 'Show', book, class: 'text-blue-500 hover:underline'
+              = link_to 'Edit', edit_book_path(book), class: 'ml-2 text-blue-500 hover:underline'
+              = link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: 'ml-2 text-red-500 hover:underline'
+
+  = render partial: '/shared/pagination', locals: { pagy: @pagy }
+
+- else
+  p No books available.

@@ -18,21 +18,17 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-class User < ApplicationRecord
-  rolify
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+require 'rails_helper'
 
-  has_many :borrows
-  after_create :assign_default_role
-
-  def assign_default_role
-    self.add_role(:member) if self.roles.blank?
+RSpec.describe User, type: :model do
+  describe "fields" do
+    it { should have_db_column(:email).of_type(:string).with_options(null: false) }
+    it { should have_db_column(:first_name).of_type(:string).with_options(null: true) }
+    it { should have_db_column(:last_name).of_type(:string).with_options(null: true) }
   end
 
-  def role
-    roles&.first&.name
+  describe "Associations" do
+    it { should have_many(:borrows) }
+    it { should have_and_belong_to_many(:roles) }
   end
 end

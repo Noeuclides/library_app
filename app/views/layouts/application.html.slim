@@ -10,8 +10,6 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
   body
-    / main.container.mx-auto.mt-28.px-5.flex
-    /   = yield
     .min-h-screen.bg-gray-100.flex.flex-col
       header.bg-blue-600.text-white
         .container.mx-auto.py-4
@@ -19,8 +17,6 @@ html
             h1.text-2xl LibraryApp
             nav
               ul.flex.space-x-4
-                li
-                  = link_to 'Home', root_path, class: 'hover:underline'
                 - if user_signed_in?
                   li
                     = link_to 'Dashboard', root_path, class: 'hover:underline'

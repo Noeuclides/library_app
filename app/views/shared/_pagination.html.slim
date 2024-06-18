@@ -1,0 +1,24 @@
+- link = pagy_link_proc(pagy)
+
+nav[class="flex flex-col items-center justify-center my-12 ml-8 mr-8 "]
+  div[class="flex text-gray-700"]
+    - if pagy.prev
+      div[class="mr-5 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer shadow-lg"]
+        = prev_pagination_link(link, pagy)
+
+    div[class="flex items-center h-12 font-medium text-xs bg-white border border-gray-300 rounded-md shadow-lg"]
+      - pagy.series.each do |item|        # series example: [1, :gap, 7, 8, "9", 10, 11, :gap, 36]
+        - if item.is_a?(Integer)          # page link
+          == link.call(item, item, 'class="w-12 flex justify-center items-center cursor-pointer leading-5 transition duration-150 ease-in text-black"')
+        - elsif item.is_a?(String)        # current page
+          div[class="w-10 h-8 flex justify-center items-center rounded-md cursor-pointer bg-blue-500 leading-5 transition duration-150 ease-in text-white ml-2 mr-2" ]=item
+        - elsif item == :gap              # page gap
+          span.page.gap ==> pagy_t('pagy.nav.gap')
+
+
+    - if pagy.next
+      div[class="ml-3 cursor-pointer realtive inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 shadow-lg"]
+        = next_pagination_link(link, pagy)
+
+
+

@@ -10,9 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_16_221536) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_17_015621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "author", null: false
+    t.string "genre"
+    t.string "ean_prefix", null: false
+    t.string "registration_group", null: false
+    t.string "registrant", null: false
+    t.string "publication", null: false
+    t.string "check_digit", null: false
+    t.integer "total_copies", null: false
+    t.integer "available_copies"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "borrows", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "borrowed_at", null: false
+    t.datetime "due_date", null: false
+    t.datetime "returned_at"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_borrows_on_book_id"
+    t.index ["user_id", "book_id"], name: "index_borrows_on_user_id_and_book_id", unique: true
+    t.index ["user_id"], name: "index_borrows_on_user_id"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
@@ -46,4 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_16_221536) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "borrows", "books"
+  add_foreign_key "borrows", "users"
 end

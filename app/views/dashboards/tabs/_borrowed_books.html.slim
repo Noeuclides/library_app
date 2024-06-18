@@ -1,0 +1,36 @@
+h2.text-2xl.font-bold.mb-2 Total Borrows
+p.text-lg = @total_borrows
+
+
+h3.text-xl.font-bold.mt-4.mb-2 Borrow List
+- if @borrows.any?
+  div.overflow-x-auto
+    table.min-w-full.bg-white
+      thead
+        tr
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Title
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Author
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Genre
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Borrow date
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Due date
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 User
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Borrow status
+          th.py-2.px-4.bg-gray-200.font-bold.uppercase.text-sm.text-gray-600 Action
+      tbody
+        - @borrows.each do |borrow|
+          tr class="#{borrow_book_class(borrow)}"
+            td.py-2.px-4.border-b.text-center = borrow.book.title
+            td.py-2.px-4.border-b.text-center = borrow.book.author
+            td.py-2.px-4.border-b.text-center = borrow.book.genre
+            td.py-2.px-4.border-b.text-center = borrow.borrowed_at
+            td.py-2.px-4.border-b.text-center = borrow.due_date
+            td.py-2.px-4.border-b.text-center = borrow.user.email
+            td.text-center = borrow.status
+            td.py-2.px-4.border-b
+              = button_to 'Mark as returned', return_book_borrow_path(id: borrow.id), method: :put, remote: true, class: 'hover:underline'
+
+
+  = render partial: '/shared/pagination', locals: { pagy: @pagy }
+
+- else
+  p No books available.

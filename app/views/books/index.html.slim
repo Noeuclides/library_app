@@ -1,0 +1,25 @@
+/ app/views/books/index.html.slim
+h1.text-2xl.font-bold.mb-4 Books
+
+.table-auto.w-full
+  thead
+    tr
+      th.px-4.py-2.border Title
+      th.px-4.py-2.border Author
+      th.px-4.py-2.border Genre
+      th.px-4.py-2.border ISBN
+      th.px-4.py-2.border Actions
+
+  tbody
+    - @books.each do |book|
+      tr
+        td.px-4.py-2.border= book.title
+        td.px-4.py-2.border= book.author
+        td.px-4.py-2.border= book.genre
+        td.px-4.py-2.border= book.isbn
+        td.px-4.py-2.border
+          = link_to 'Show', book, class: 'text-blue-500 hover:underline'
+          = link_to 'Edit', edit_book_path(book), class: 'ml-2 text-blue-500 hover:underline'
+          = link_to 'Destroy', book_path(book), method: :delete, data: { confirm: 'Are you sure?' }, class: 'ml-2 text-red-500 hover:underline'
+
+= link_to 'New Book', new_book_path, class: 'mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700'

@@ -1,0 +1,54 @@
+= form_with(model: book) do |f|
+  - if book.errors.any?
+    div style="color: red"
+      h2 = "#{pluralize(book.errors.count, "error")} prohibited this book from being saved:"
+      ul
+        - book.errors.each do |error|
+          li = error.full_message
+
+  .mt-2
+    .grid.grid-cols-1.gap-x-6.gap-y-8.sm:grid-cols-4
+      .mb-4.sm:col-span-2
+        = f.label :title, class: 'block text-gray-700 text-sm font-bold mb-2'
+        = f.text_field :title, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      .mb-4.sm:col-span-2
+        = f.label :author, class: 'block text-gray-700 text-sm font-bold mb-2'
+        = f.text_field :author, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      .mb-4.sm:col-span-2
+        = f.label :genre, class: 'block text-gray-700 text-sm font-bold mb-2'
+        = f.text_field :genre, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+      .mb-4.sm:col-span-2
+        = f.label :total_copies, class: 'block text-gray-700 text-sm font-bold mb-2'
+        = f.number_field :total_copies, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+  .mt2
+    div.block.text-gray-700.text-md.font-bold.mb-2 ISBN
+    .grid.grid-cols-1.gap-x-6.gap-y-8.sm:grid-cols-6
+      .sm:col-span-1
+        = f.label :ean_prefix, class: 'block text-gray-700 text-sm font-bold mb-2'
+        .mt-2
+          = f.text_field :ean_prefix, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      .sm:col-span-1
+        = f.label :registration_group, class: 'block text-gray-700 text-sm font-bold mb-2'
+        .mt-2
+          = f.text_field :registration_group, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      .sm:col-span-1
+        = f.label :registrant, class: 'block text-gray-700 text-sm font-bold mb-2'
+        .mt-2
+          = f.text_field :registrant, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      .sm:col-span-1
+        = f.label :publication, class: 'block text-gray-700 text-sm font-bold mb-2'
+        .mt-2
+          = f.text_field :publication, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+      .sm:col-span-1
+        = f.label :check_digit, class: 'block text-gray-700 text-sm font-bold mb-2'
+        .mt-2
+          = f.text_field :check_digit, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+
+  .mt-8.flex.items-center.justify-between
+    = f.submit 'Submit', class: 'btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+
