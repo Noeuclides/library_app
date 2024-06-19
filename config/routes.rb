@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'dashboards#show'
+  get 'dashboard', to: 'dashboards#show'
 
-  get 'dashboard/librarian', to: 'dashboards#librarian'
-  get 'dashboard/member', to: 'dashboards#member'
   get 'dashboard/member_borrows', to: 'dashboards#member_borrows'
   get 'dashboard/all_borrows', to: 'dashboards#all_borrows'
 

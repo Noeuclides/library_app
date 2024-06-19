@@ -1,6 +1,6 @@
 = render partial: '/shared/filter', locals: { url: @url }
 div
-  = render partial: '/shared/tabs', locals: { pagy: @pagy, title1: 'Books', title2: 'Borrows', url1: dashboard_librarian_path, url2: dashboard_all_borrows_path }
+  = render partial: '/shared/tabs', locals: { pagy: @pagy, title1: 'Books', title2: 'Borrows', url1: dashboard_path, url2: dashboard_all_borrows_path }
   = render partial: 'dashboards/tabs/borrowed_books'
 
 

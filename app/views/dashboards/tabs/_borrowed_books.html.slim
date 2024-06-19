@@ -22,8 +22,8 @@ h3.text-xl.font-bold.mt-4.mb-2 Borrow List
             td.py-2.px-4.border-b.text-center = borrow.book.title
             td.py-2.px-4.border-b.text-center = borrow.book.author
             td.py-2.px-4.border-b.text-center = borrow.book.genre
-            td.py-2.px-4.border-b.text-center = borrow.borrowed_at
-            td.py-2.px-4.border-b.text-center = borrow.due_date
+            td.py-2.px-4.border-b.text-center = borrow.borrowed_at.strftime("%d/%m/%Y")
+            td.py-2.px-4.border-b.text-center = borrow.due_date.strftime("%d/%m/%Y")
             td.py-2.px-4.border-b.text-center = borrow.user.email
             td.text-center = borrow.status
             td.py-2.px-4.border-b

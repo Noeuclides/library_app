@@ -5,9 +5,9 @@ class BorrowsController < ApplicationController
 
     @borrow.borrowed_at = Time.current
     if @borrow.save
-      redirect_to dashboard_member_path, notice: 'Book borrowed successfully.'
+      redirect_to dashboard_path, notice: 'Book borrowed successfully.'
     else
-      redirect_to dashboard_member_path, alert: 'Book not available for borrow.'
+      redirect_to dashboard_path, alert: 'Book not available for borrow.'
     end
   end
 
