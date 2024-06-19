@@ -49,10 +49,11 @@ end
 borrowed_books = books.sample(20) # Select 20 random books to be borrowed
 borrowed_books.each do |book|
   borrowed_at = Faker::Date.between(from: 1.month.ago, to: Date.today)
-  Borrow.create(
+  borrow = Borrow.create(
     user: member,
     book: book,
     borrowed_at: borrowed_at,
     due_date: borrowed_at + 2.weeks
   )
+  borrow.overdue! if borrow.due_date > Time.current
 end
